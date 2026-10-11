@@ -1,0 +1,36 @@
+# ---- STM32CubeIDE / Eclipse 编译产物 ----
+Debug/
+Release/
+build/
+
+# ---- 编译中间文件与固件 ----
+*.o
+*.d
+*.su
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.i
+*.siz
+*.cyclo
+
+# ---- 本地环境与索引 ----
+.mxproject.bak
+*.orig
+*.rej
+*.bak
+*~
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# ---- 敏感信息（请勿提交） ----
+secrets.h
+config_local.h
+credentials.h
+wifi_config.h
