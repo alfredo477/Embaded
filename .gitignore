@@ -29,6 +29,16 @@ build/
 Thumbs.db
 desktop.ini
 
+# ---- Keil MDK / C51 编译产物 ----
+Objects/
+Listings/
+*.uvopt
+*.uvguix.*
+*.dep
+*.build_log.htm
+*.uvproj.bak
+*.uvprojx.bak
+
 # ---- 敏感信息（请勿提交） ----
 secrets.h
 config_local.h
