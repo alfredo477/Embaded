@@ -33,11 +33,21 @@ desktop.ini
 Objects/
 Listings/
 *.uvopt
+*.uvopt.bak
+*.uvgui.*
 *.uvguix.*
 *.dep
 *.build_log.htm
 *.uvproj.bak
 *.uvprojx.bak
+# 输出目录被设到工程根目录时产生的文件
+*.OBJ
+*.obj
+*.lnp
+*.m51
+*.lst
+*.crf
+*.d
 
 # ---- 敏感信息（请勿提交） ----
 secrets.h
