@@ -388,6 +388,9 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>driver</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
