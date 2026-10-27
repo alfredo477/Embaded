@@ -7,10 +7,15 @@ unsigned char Key_Slow_Down;//按键减速专用变量 10ms
 unsigned int Seg_Slow_Down;//数码管减速专用变量 500ms
 unsigned char Key_Val,Key_Down,Key_Old;//按键扫描专用变量
 unsigned char Seg_Pos;//数码管扫描变量
-unsigned char Seg_Buf[6]={10，10，10，10，10，10};//数码管显示数据存放数组
+unsigned char Seg_Buf[6]={10，10，10，10，10，10};//数码管显示数据存放数组 初始化全部是10表示全灭
 unsigned char Seg_Mode;//数码管显示界面 0-显示 1-设置
 unsigned int Timer_1000ms;//1000ms标志位
 unsigned char Time_Count;//系统计时变量
+bit System_Flag;//系统标志位 0-暂停 1-开始
+unsigned char Set_Dat[3]={15,30,60};//设置参数存储数组
+unsigned char  Set_Dat_Index=1;//参数存储数组里面的变量
+unsigned int Timer_500ms;//500ms为标志位 1s作为周期
+bit Seg_Flag;//数码管标志位
 
 /* 按键处理函数 */
 void Key_Proc()
@@ -24,7 +29,26 @@ void Key_Proc()
 	
 	switch(Key_Down)
 	{
-		
+		case 1://启动倒计时
+			if(Seg_Mode==0)
+				System_Flag=1;
+		break;
+		case 3://切换到设置界面
+			if(Seg_Mode==1)//已经在设置界面之后再点击则保存值
+				Time_Count=Set_Dat[Set_Dat_Index];
+			Seg_Mode ^=1;
+		break;
+		case 4:
+			if(Seg_Mode==1)
+			{
+				if(++ Set_Dat_Index==3)//在参数存储值里面进行选择
+				 Set_Dat_Index=0;
+			}
+		break;
+		case 2:
+			if(Seg_Mode==0)	
+				Time_Count=Set_Dat[Set_Dat_Index];//不在设置界面则复位
+		break;
 	}
 }
 
@@ -37,14 +61,37 @@ void Seg_Proc()
 	Seg_Buf[0]=Seg_Mode+1;
 	if(Seg_Mode==0)//系统处于显示界面
 	{
-		
+		Seg_Buf[4]=Time_Count / 10 % 10; //
+		Seg_Buf[5]=Time_Count % 10;
+	}
+	else//在系统处于设置界面
+	{
+		if(Seg_Flag==1)
+		{
+			Seg_Buf[4]=Set_Dat[Set_Dat_Index] / 10 % 10; //显示十位
+			Seg_Buf[5]=Set_Dat[Set_Dat_Index] % 10;//显示个位
+		}
+		else
+		{
+			Seg_Buf[4]=10;//Seg_Buf为数码管显示一共有六个 第五个熄灭
+			Seg_Buf[5]=10;//第六个熄灭
+		}
 	}
 }
 
 /*其他显示函数*/
 void Led_Proc()
 {
-	
+	if(Time_Count==0)
+	{
+		P1=0x00;//LEDP1口全亮
+		P2_3=0;//蜂鸣器为0
+	}
+	else
+	{
+		P1=0xff;
+		P2_3=1;
+	}
 }
 
 
@@ -69,6 +116,22 @@ void TImer0Server() interrupt 1
 	if(++Seg_Slow_Down==500) Seg_Slow_Down=0;
 	if(++Seg_Pos==6) Seg_Pos=0;
 	Seg_Disp(Seg_Pos,Seg_Buf[Seg_Pos]);
+	if(System_Flag==1)
+	{
+		if (++TImer_1000ms==1000)//作为计时器记到1000ms 为1s
+		{
+			Timer_1000ms=0;//重新计时
+			Time_Count--;
+			//Time_Count类型是unsigned cahr在0-255之间 原本的Time_Count减到0之后会回到255
+			if(Time_Count==255)//这样就可以一直卡在0
+				Time_Count=0;
+		}
+	}
+	if(++Timer_500ms==500)
+	{
+		TImer_500ms=0;
+		Seg_Flag ^=1
+	}
 }
 
 
