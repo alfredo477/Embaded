@@ -1,6 +1,7 @@
 /*头文件声明区域*/
 #include <REGX52.H>
-#include <Key.h>
+#include "Key.h"
+#include "Seg.h"
 
 /*变量声明区域*/
 unsigned char Key_Slow_Down;//按键减速专用变量 10ms

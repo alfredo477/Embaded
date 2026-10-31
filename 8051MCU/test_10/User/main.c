@@ -27,6 +27,8 @@ void Key_Proc()
 	switch(Key_Down)
 	{
 		case 1:
-			if()
+			if(Seg_Mode==0)
+				System_Flag=1;
+		break;
 	}
 }

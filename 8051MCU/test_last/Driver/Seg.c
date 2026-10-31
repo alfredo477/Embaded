@@ -6,7 +6,7 @@ unsigned char Seg_Wela[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf};//数码管位码存储数组
 /*数码显示函数*/
 void Seg_Disp(unsigned char wela,dula)
 {
-	//P2_6是位码 P2_7是断码 先位选再段选
+	//P2_6是位码 P2_7是段码 先位选再段选
 	P0=0x00;//输入数据
 	P2_6=1;//打开锁存器存入数据 
 	P2_6=0;//关闭锁存器锁住旧数据
