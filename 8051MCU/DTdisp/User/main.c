@@ -1,10 +1,11 @@
 #include <REGX52.H>
 #include "Seg.h"
+#include "Time.h"
 #include <stdio.h>
 
 unsigned char ucSec,ucLed;
 unsigned char pucSeg_Buf[9],pucSeg_Code[8],ucSeg_Pos;
-unsigned char ulms;
+unsigned int ulms;
 void main(void)
 {
 	Cls_Peripheral();

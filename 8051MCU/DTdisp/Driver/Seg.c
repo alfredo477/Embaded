@@ -1,5 +1,5 @@
 #include <Seg.h>
-void Seg_Tran(unsigned char *pucSeg_Buf,unsigned cahr *pucSeg_Code)
+void Seg_Tran(unsigned char *pucSeg_Buf,unsigned char *pucSeg_Code)
 {
 	unsigned char i,j=0,temp;
 	for(i=0;i<8;i++,j++)
@@ -95,7 +95,7 @@ void Seg_Disp(unsigned char *pucSeg_Code,unsigned char ucSeg_Pos)
 	P0 = 1<<ucSeg_Pos;
 	P2 = P2 & 0x1f | 0xC0;
 	P2 &= 0x1F;
-	P0 = pucSeg_C0de[ucSeg_Pos];
+	P0 = pucSeg_Code[ucSeg_Pos];
 	P2 = P2 & 0x1F | 0xE0;
 	P2 &= 0x1F;
 }

@@ -8,7 +8,7 @@ void Cls_Peripheral(void)
 	P2=P2 & 0x1F | 0xA0;
 	P2&= 0x1F;
 }
-void Led_Disp(unsigned cahr ucLed)
+void Led_Disp(unsigned char ucLed)
 {
 	
 	P0=~ucLed;
@@ -18,7 +18,8 @@ void Led_Disp(unsigned cahr ucLed)
 
 void Timer1Init(void)
 {
-	AUXR &= 0xBF;
+	/* AT89C52 无 AUXR 寄存器，定时器固定 12T 模式，与 AUXR&=0xBF 效果相同 */
+	/* AUXR &= 0xBF; */
 	TMOD &=0x0F;
 	TL1 =0x18;
 	TH1 =0xFC;
