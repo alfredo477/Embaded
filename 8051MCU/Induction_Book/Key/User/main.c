@@ -13,7 +13,7 @@ void SEG_Proc(unsigned char ucSeg_Val);
 void main(void)
 {
 	Cls_Peripheral();
-	Timeer1Init();
+	Timer1Init();
 	
 	while(1)
 	{
@@ -39,4 +39,37 @@ void Time_1(void) interrupt 3
 }
 
 
-void()
+void Key_Proc(void)
+{
+	unsigned char ucKey_Val,ucKey_Down,ucKey_Up;
+	if(ucKey_Dly) return;
+	ucKey_Dly=1;
+	ucKey_Val=Key_Read();
+	ucKey_Down=ucKey_Val&(ucKey_Old^ucKey_Val);
+	ucKey_Up=~ucKey_Val&(ucKey_Old^ucKey_Val);
+	ucKey_Old=ucKey_Val;
+	
+	if(ucKey_Down)
+	{
+		ulKey_Time=ulms;
+		SEG_Proc(ucKey_Down);
+	}
+	if(ucKey_Up)
+	
+		SEG_Proc(ucKey_Up);
+	if(ucKey_Old&&(ulms - ulKey_Time>1000))
+	{
+		ulKey_Time=ulms;
+		SEG_Proc(ucKey_Old);
+	}
+}
+void SEG_Proc(unsigned char ucSeg_Val)
+{
+	unsigned char i;
+	for(i=0;i<7;i++)
+		pucSeg_Buf[i]=pucSeg_Buf[i+1];
+	if(ucSeg_Val<14)
+		pucSeg_Buf[i]=ucSeg_Val-4+'0';
+	else
+		pucSeg_Buf[i]=ucSeg_Val-14+'A';
+}

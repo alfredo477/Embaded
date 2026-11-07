@@ -390,6 +390,23 @@
         </Group>
         <Group>
           <GroupName>Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\Key.c</FilePath>
+            </File>
+            <File>
+              <FileName>Seg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\Seg.c</FilePath>
+            </File>
+            <File>
+              <FileName>Time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\Time.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
